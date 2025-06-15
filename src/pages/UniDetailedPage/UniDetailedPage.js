@@ -147,6 +147,11 @@ Satdobato, Nepal
                     Institute Of Chartered Accountants Of Nepal
                   </span>
                 </div>
+                <button
+                  onClick={() => openModal('CAP-III')}
+                  className='bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600'>
+                  Inquire
+                </button>
               </div>
             </div>
           </div>
@@ -357,8 +362,15 @@ Satdobato, Nepal
               <h2 className='text-2xl font-bold text-gray-800 mb-6'>
                 The Institute Of Chartered Accountants Of Nepal (ICAN)
               </h2>
-              <div className='h-64 bg-gray-200 rounded-lg flex items-center justify-center'>
-                <p className='text-gray-500'>Map Location</p>
+              <div className='rounded-lg overflow-hidden h-64'>
+                <iframe
+                  src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.720231010322!2d85.32031697518415!3d27.694748026517294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19805b5e0a89%3A0xa9d622e73d0ce839!2sThe%20Institute%20of%20Chartered%20Accountants%20of%20Nepal%20(ICAN)!5e0!3m2!1sen!2snp!4v1718124097801!5m2!1sen!2snp'
+                  width='100%'
+                  height='100%'
+                  style={{ border: 0 }}
+                  allowFullScreen=''
+                  loading='lazy'
+                  referrerPolicy='no-referrer-when-downgrade'></iframe>
               </div>
             </div>
           </div>

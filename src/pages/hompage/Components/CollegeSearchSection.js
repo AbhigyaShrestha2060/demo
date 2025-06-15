@@ -1,17 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
 import {
-  Search,
-  Filter,
-  MapPin,
-  GraduationCap,
-  BookOpen,
-  Star,
   ChevronDown,
-  X,
-  SlidersHorizontal,
+  Filter,
+  GraduationCap,
   Grid,
   List,
+  MapPin,
+  Search,
+  SlidersHorizontal,
+  Star,
 } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 import { colors } from '../../../components/Theme/Theme';
 
