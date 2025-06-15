@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Colleges } from '../../components/Data/Data';
 import { colors } from '../../components/Theme/Theme';
-import CollegeSearchSection from './Components/CollegeSearchSection';
 import { CollegesSection } from './Components/CollegeSection';
 import { ExamResourcesSection } from './Components/ExamResourceSection';
 import { FeaturesSection } from './Components/FeaturedSection';
@@ -32,7 +31,7 @@ export default function CollegeInfoNepal() {
       <FeaturesSection />
       <LatestNoticesSection />
       <CollegesSection colleges={colleges} />
-      <CollegeSearchSection />
+      {/* <CollegeSearchSection /> */}
       <ExamResourcesSection />
     </div>
   );

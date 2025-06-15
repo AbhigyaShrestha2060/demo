@@ -12,59 +12,50 @@ import {
   X,
 } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // <-- import here
 
 export default function Navbar({ className = '' }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [showGetStartedDropdown, setShowGetStartedDropdown] = useState(false);
 
+  const navigate = useNavigate(); // <-- initialize navigate
+
   const navigationItems = [
     {
       name: 'Courses',
       icon: BookOpen,
-      href: '#',
+      href: '/courses', // change to real routes
       submenu: [
-        { name: 'Engineering', href: '#' },
-        { name: 'Medical', href: '#' },
-        { name: 'Management', href: '#' },
-        { name: 'Arts & Science', href: '#' },
+        { name: 'Engineering', href: '/courses/engineering' },
+        { name: 'Medical', href: '/courses/medical' },
+        { name: 'Management', href: '/courses/management' },
+        { name: 'Arts & Science', href: '/courses/arts-science' },
       ],
     },
     {
       name: 'Colleges',
       icon: Users,
-      href: '#',
-      submenu: [
-        { name: 'Top Colleges', href: '#' },
-        { name: 'College Rankings', href: '#' },
-        { name: 'College Reviews', href: '#' },
-        { name: 'Admission Process', href: '#' },
-      ],
+      href: '/university',
     },
     {
       name: 'Exams',
       icon: Award,
-      href: '#',
+      href: '/exams',
       submenu: [
-        { name: 'JEE Main', href: '#' },
-        { name: 'NEET', href: '#' },
-        { name: 'CAT', href: '#' },
-        { name: 'GATE', href: '#' },
+        { name: 'JEE Main', href: '/exams/jee-main' },
+        { name: 'NEET', href: '/exams/neet' },
+        { name: 'CAT', href: '/exams/cat' },
+        { name: 'GATE', href: '/exams/gate' },
       ],
     },
     {
       name: 'University',
       icon: Globe,
-      href: '#',
-      submenu: [
-        { name: 'Central Universities', href: '#' },
-        { name: 'State Universities', href: '#' },
-        { name: 'Private Universities', href: '#' },
-        { name: 'Deemed Universities', href: '#' },
-      ],
+      href: '/university',
     },
-    { name: 'Exam Center', icon: MapPin, href: '#' },
-    { name: 'Information', icon: Info, href: '#' },
+    { name: 'Exam Center', icon: MapPin, href: '/exam-center' },
+    { name: 'Information', icon: Info, href: '/information' },
   ];
 
   const handleDropdownToggle = (name) => {
@@ -79,7 +70,10 @@ export default function Navbar({ className = '' }) {
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between items-center h-16'>
             {/* Logo Section */}
-            <div className='flex items-center'>
+            <div
+              className='flex items-center cursor-pointer'
+              onClick={() => navigate('/')} // <-- navigate home on click
+            >
               <div className='flex items-center space-x-3'>
                 <div className='relative'>
                   <div className='w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-200'>
@@ -102,9 +96,13 @@ export default function Navbar({ className = '' }) {
                   key={item.name}
                   className='relative group'>
                   <button
-                    onClick={() =>
-                      item.submenu && handleDropdownToggle(item.name)
-                    }
+                    onClick={() => {
+                      if (item.submenu) {
+                        handleDropdownToggle(item.name);
+                      } else {
+                        navigate(item.href);
+                      }
+                    }}
                     className='flex items-center space-x-1 px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors duration-200 rounded-lg hover:bg-gray-50'>
                     <item.icon className='w-4 h-4' />
                     <span className='font-medium'>{item.name}</span>
@@ -128,8 +126,13 @@ export default function Navbar({ className = '' }) {
                       {item.submenu.map((subItem) => (
                         <a
                           key={subItem.name}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(subItem.href);
+                            setActiveDropdown(null);
+                          }}
                           href={subItem.href}
-                          className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-150'>
+                          className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-150 cursor-pointer'>
                           {subItem.name}
                         </a>
                       ))}
@@ -154,7 +157,7 @@ export default function Navbar({ className = '' }) {
                 {/* Dropdown under the button */}
                 {showGetStartedDropdown && (
                   <div className='absolute right-0 mt-2 w-[320px] bg-white rounded-xl shadow-xl border border-gray-200 z-50 p-4 flex flex-wrap gap-4'>
-                    {/* Login Card - flex-grow 3 */}
+                    {/* Login Card */}
                     <a
                       href='/college-login'
                       className='bg-blue-100 rounded-xl p-4 flex flex-col items-center hover:bg-blue-200 transition-colors duration-200 flex-[3_1_0%]'>
@@ -169,7 +172,7 @@ export default function Navbar({ className = '' }) {
                       <p className='text-sm text-gray-600'>as College</p>
                     </a>
 
-                    {/* Signup Card - flex-grow 2 */}
+                    {/* Signup Card */}
                     <a
                       href='/college-register'
                       className='bg-blue-500 rounded-xl p-4 flex flex-col items-center hover:bg-blue-600 transition-colors duration-200 flex-[2_1_0%]'>
@@ -219,6 +222,7 @@ export default function Navbar({ className = '' }) {
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
+                  navigate('/get-started'); // example route for get started mobile
                 }}
                 className='w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg'>
                 Get Started
@@ -229,10 +233,14 @@ export default function Navbar({ className = '' }) {
                 {navigationItems.map((item) => (
                   <div key={item.name}>
                     <button
-                      onClick={() =>
-                        item.submenu &&
-                        handleDropdownToggle(`mobile-${item.name}`)
-                      }
+                      onClick={() => {
+                        if (item.submenu) {
+                          handleDropdownToggle(`mobile-${item.name}`);
+                        } else {
+                          navigate(item.href);
+                          setMobileMenuOpen(false);
+                        }
+                      }}
                       className='flex items-center justify-between w-full px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200'>
                       <div className='flex items-center space-x-3'>
                         <item.icon className='w-5 h-5' />
@@ -256,8 +264,14 @@ export default function Navbar({ className = '' }) {
                           {item.submenu.map((subItem) => (
                             <a
                               key={subItem.name}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                navigate(subItem.href);
+                                setMobileMenuOpen(false);
+                                setActiveDropdown(null);
+                              }}
                               href={subItem.href}
-                              className='block px-4 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors duration-150'>
+                              className='block px-4 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors duration-150 cursor-pointer'>
                               {subItem.name}
                             </a>
                           ))}

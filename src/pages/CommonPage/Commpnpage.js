@@ -135,7 +135,7 @@ const University = () => {
   const universityOptions = universities.map((u) => u.name);
 
   const openDetailedPage = () => {
-    console.log('Navigate to detailed page');
+    window.location.href = '/universityDetailed';
   };
 
   const handleUniversitySelect = (university) => {

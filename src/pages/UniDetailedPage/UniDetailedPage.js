@@ -141,17 +141,17 @@ Satdobato, Nepal
                   The Institute of Chartered Accountants of Nepal (ICAN)
                 </h1>
                 <div className='flex items-center space-x-2 text-blue-200'>
-                  <span>University</span>
-                  <span></span>
                   <span className='text-blue-300'>
                     Institute Of Chartered Accountants Of Nepal
                   </span>
                 </div>
-                <button
-                  onClick={() => openModal('CAP-III')}
-                  className='bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600'>
-                  Inquire
-                </button>
+                <div className='mt-4'>
+                  <button
+                    onClick={() => openModal('CAP-III')}
+                    className='bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600'>
+                    Inquire
+                  </button>
+                </div>
               </div>
             </div>
           </div>
