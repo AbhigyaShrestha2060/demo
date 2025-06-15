@@ -5,6 +5,7 @@ import './App.css';
 import { Footer } from './components/Footer/Footer';
 import { Navbar } from './components/Navbar/Navbar';
 import CollegeInfoNepal from './pages/hompage/Homepage';
+import { University } from './pages/University/University';
 
 function App() {
   return (
@@ -16,6 +17,11 @@ function App() {
           <Route
             path='/'
             element={<CollegeInfoNepal />}
+          />
+
+          <Route
+            path='/University'
+            element={<University />}
           />
         </Routes>
         <Footer />
