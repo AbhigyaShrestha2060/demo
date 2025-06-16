@@ -1,3 +1,4 @@
+// components/University.js
 import {
   Award,
   Calendar,
@@ -7,165 +8,60 @@ import {
   Star,
   Users,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useUniversity } from '../../context/UniversityContext';
+import { useUniversityFilters } from '../../hooks/useUniversityFilters';
 import { FilterSlider } from './SideFlider/SideFilter';
 
+const filters = [
+  'All',
+  'College',
+  'University',
+  'Course',
+  'Event',
+  'Information',
+  'Scholarship',
+  'Exam Routine',
+  'Entrance',
+  'Admission',
+  'Result',
+  'Job Vacancy',
+  'Foreign Affiliated',
+  'Local',
+  'Featured',
+  'Popular',
+];
+
 const University = () => {
-  const [showFilterModal, setShowFilterModal] = useState(false);
-  useState(false);
-  const [selectedUniversities, setSelectedUniversities] = useState([]);
-  const [foreignAffiliated, setForeignAffiliated] = useState({
-    yes: false,
-    no: false,
+  const {
+    universities,
+    loading,
+    selectedUniversities,
+    setSelectedUniversities,
+    foreignAffiliated,
+    setForeignAffiliated,
+    searchTerm,
+    setSearchTerm,
+    clearFilters,
+  } = useUniversity();
+
+  const filteredUniversities = useUniversityFilters({
+    universities,
+    searchTerm,
+    selectedUniversities,
+    foreignAffiliated,
   });
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const filters = [
-    'All',
-    'College',
-    'University',
-    'Course',
-    'Event',
-    'Information',
-    'Scholarship',
-    'Exam Routine',
-    'Entrance',
-    'Admission',
-    'Result',
-    'Job Vacancy',
-    'Foreign Affiliated',
-    'Local',
-    'Featured',
-    'Popular',
-  ];
-
-  const universities = [
-    {
-      id: 1,
-      name: 'The Institute of Chartered Accountants of Nepal (ICAN)',
-      location: 'Satdobato, Lalitpur',
-      image:
-        'https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop',
-      type: 'Institute',
-      featured: true,
-      rating: 4.8,
-      students: '2,500+',
-      established: '1997',
-      programs: 12,
-      description: 'Premier accounting education institute in Nepal',
-      tags: ['Professional', 'Accounting', 'Finance'],
-    },
-    {
-      id: 2,
-      name: 'Rapti Academy of Health Sciences',
-      location: 'Ghorahi, Dang',
-      image:
-        'https://www.collegenp.com/uploads/2025/04/rapti-technical-school-dang-building.jpg',
-      type: 'Academy',
-      featured: false,
-      rating: 4.5,
-      students: '1,800+',
-      established: '2010',
-      programs: 8,
-      description: 'Leading health sciences education in western Nepal',
-      tags: ['Medical', 'Health Sciences', 'Research'],
-    },
-    {
-      id: 3,
-      name: 'Madan Bhandari University of Science and Technology',
-      location: 'Chitlang, Hetauda, Makwanpur',
-      image:
-        'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&h=300&fit=crop',
-      type: 'University',
-      featured: true,
-      rating: 4.7,
-      students: '3,200+',
-      established: '2017',
-      programs: 15,
-      description: 'Modern university focusing on science and technology',
-      tags: ['Science', 'Technology', 'Innovation'],
-    },
-    {
-      id: 4,
-      name: 'Pashupati Hindu University',
-      location: 'Manohara, Kathmandu',
-      image:
-        'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?w=400&h=300&fit=crop',
-      type: 'University',
-      featured: false,
-      rating: 4.3,
-      students: '2,100+',
-      established: '2015',
-      programs: 10,
-      description: 'Traditional and modern education in cultural context',
-      tags: ['Cultural Studies', 'Traditional', 'Liberal Arts'],
-    },
-    {
-      id: 5,
-      name: 'Manmohan Technical University',
-      location: 'Sundarijal, Kathmandu',
-      image:
-        'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop',
-      type: 'Technical University',
-      featured: true,
-      rating: 4.9,
-      students: '4,500+',
-      established: '2010',
-      programs: 20,
-      description: 'Leading technical education and research institution',
-      tags: ['Engineering', 'Technical', 'Research'],
-    },
-    {
-      id: 6,
-      name: 'Nepal Medical College',
-      location: 'Jorpati, Kathmandu',
-      image:
-        'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop',
-      type: 'Medical College',
-      featured: false,
-      rating: 4.6,
-      students: '1,200+',
-      established: '1997',
-      programs: 6,
-      description: 'Excellence in medical education and healthcare',
-      tags: ['Medicine', 'Healthcare', 'Research'],
-    },
-  ];
-
-  const universityOptions = universities.map((u) => u.name);
 
   const openDetailedPage = () => {
     window.location.href = '/universityDetailed';
   };
 
-  const handleUniversitySelect = (university) => {
-    setSelectedUniversities((prev) =>
-      prev.includes(university)
-        ? prev.filter((u) => u !== university)
-        : [...prev, university]
-    );
-  };
-
-  const clearFilters = () => {
-    setSelectedUniversities([]);
-    setForeignAffiliated({ yes: false, no: false });
-    setSearchTerm('');
-  };
-
-  const saveFilters = () => {
-    setShowFilterModal(false);
-  };
-
-  const filteredUniversities = universities.filter(
-    (uni) =>
-      uni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      uni.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      uni.type.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  if (loading)
+    return <div className='text-center p-8'>Loading universities...</div>;
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100'>
-      {/* Header Section */}
+      {/* Header & Search */}
+
       <div className='bg-white/80 backdrop-blur-lg border-b border-white/20 sticky top-0 z-40'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6'>
           <div className='flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4'>
@@ -178,7 +74,6 @@ const University = () => {
               </p>
             </div>
 
-            {/* Search Bar */}
             <div className='relative max-w-md w-full mx-auto lg:mx-0'>
               <Search
                 size={18}
@@ -196,12 +91,11 @@ const University = () => {
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Filter Pills */}
       <div className='max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6'>
-        {/* Filter Pills */}
         <FilterSlider filters={filters} />
 
-        {/* Results Counter */}
+        {/* Results Count */}
         <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8'>
           <div className='flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4'>
             <p className='text-gray-600 font-medium text-center sm:text-left'>
@@ -220,13 +114,12 @@ const University = () => {
           </div>
         </div>
 
-        {/* Universities Grid */}
+        {/* University Cards */}
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8'>
           {filteredUniversities.map((university) => (
             <div
               key={university.id}
               className='group bg-white/70 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-white/20 hover:border-blue-200 transform hover:-translate-y-2'>
-              {/* Image Container */}
               <div className='relative h-40 sm:h-48 lg:h-52 overflow-hidden'>
                 <div className='absolute inset-0 bg-gradient-to-br from-blue-400/20 to-indigo-600/20 z-10'></div>
                 <img

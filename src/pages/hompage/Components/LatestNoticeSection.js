@@ -38,7 +38,7 @@ export function LatestNoticesSection() {
   ];
 
   return (
-    <section className={`py-16 ${colors.background.secondary}`}>
+    <section className={`py-16 ${colors.background.secondary} `}>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex items-center justify-between mb-8'>
           <h2 className={`text-3xl font-bold ${colors.text.secondary}`}>
